@@ -36,7 +36,8 @@ public class MainFragment extends XPageContainerListFragment {
     protected Class[] getPagesClasses() {
         return new Class[] {
                 //此处填写fragment
-                UmengAppAnalyticsFragment.class
+                UmengAppAnalyticsFragment.class,
+                BuglyFragment.class
         };
     }
 

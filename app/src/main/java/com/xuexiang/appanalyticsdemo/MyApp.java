@@ -21,6 +21,8 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.BuglyStrategy;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.xuexiang.xaop.XAOP;
@@ -31,9 +33,9 @@ import com.xuexiang.xpage.PageConfiguration;
 import com.xuexiang.xpage.model.PageInfo;
 import com.xuexiang.xutil.XUtil;
 import com.xuexiang.xutil.common.StringUtils;
+import com.xuexiang.xutil.system.DeviceUtils;
 import com.xuexiang.xutil.tip.ToastUtils;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -42,6 +44,9 @@ import java.util.List;
  */
 public class MyApp extends Application {
 
+    private static final String APP_ID_UMENG = "5d01b5543fc195f587000182";
+    private static final String APP_ID_BUGLY = "10b84c5e6f";
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -49,6 +54,8 @@ public class MyApp extends Application {
         initLibs();
 
         initUMeng();
+
+        initBugly();
     }
 
 
@@ -82,22 +89,31 @@ public class MyApp extends Application {
      * 初始化UmengSDK
      */
     private void initUMeng() {
+        long start = System.currentTimeMillis();
         //设置LOG开关，默认为false
         UMConfigure.setLogEnabled(true);
-        try {
-            Class<?> aClass = Class.forName("com.umeng.commonsdk.UMConfigure");
-            Field[] fs = aClass.getDeclaredFields();
-            for (Field f : fs) {
-                Log.e("xuexiang", "ff=" + f.getName() + "   " + f.getType().getName());
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         //初始化组件化基础库, 注意: 即使您已经在AndroidManifest.xml中配置过appkey和channel值，也需要在App代码中调用初始化接口（如需要使用AndroidManifest.xml中配置好的appkey和channel值，UMConfigure.init调用中appkey和channel参数请置为null）。
         //第二个参数是appkey，最后一个参数是pushSecret
-        UMConfigure.init(this, "5d01b5543fc195f587000182", "Umeng", UMConfigure.DEVICE_TYPE_PHONE,"");
+        UMConfigure.init(this, APP_ID_UMENG, "Umeng", UMConfigure.DEVICE_TYPE_PHONE,"");
         //统计SDK是否支持采集在子进程中打点的自定义事件，默认不支持
         UMConfigure.setProcessEvent(true);//支持多进程打点
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+        long end = System.currentTimeMillis();
+        Log.e("initUMeng time--->", end - start + "ms");
+    }
+
+    private void initBugly() {
+        long start = System.currentTimeMillis();
+        BuglyStrategy strategy = new BuglyStrategy();
+        strategy.setEnableANRCrashMonitor(true)
+                .setEnableNativeCrashMonitor(true)
+                .setUploadProcess(true)
+//                .setAppChannel("bugly")
+//                .setDeviceID(DeviceUtils.getAndroidID())
+                .setRecordUserInfoOnceADay(true);
+        // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId,调试时将第三个参数设置为true
+        Bugly.init(this, APP_ID_BUGLY, true, strategy);
+        long end = System.currentTimeMillis();
+        Log.e("initBugly time--->", end - start + "ms");
     }
 }

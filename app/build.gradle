@@ -12,6 +12,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+        }
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
 
     if (isNeedPackage.toBoolean()) {
@@ -45,6 +56,12 @@ android {
         }
     }
 
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
     lintOptions {
         abortOnError false
     }
@@ -60,6 +77,10 @@ dependencies {
     //umeng统计
     implementation  'com.umeng.umsdk:analytics:8.0.2'
     implementation  'com.umeng.umsdk:common:2.0.2'
+
+    //bugly统计
+    implementation 'com.tencent.bugly:crashreport:3.0.0' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    implementation 'com.tencent.bugly:nativecrashreport:3.7.1' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 
     //工具类
     implementation 'com.github.xuexiangjys.XUtil:xutil-core:1.1.5'
