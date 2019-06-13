@@ -9,6 +9,8 @@ buildscript {
 
         classpath 'com.github.xuexiangjys.XAOP:xaop-plugin:1.0.3'
 
+        //美团多渠道打包
+        classpath 'com.meituan.android.walle:plugin:1.1.6'
     }
 }
 

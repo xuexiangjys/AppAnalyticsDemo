@@ -240,3 +240,7 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
+
+# bugly日志上报
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

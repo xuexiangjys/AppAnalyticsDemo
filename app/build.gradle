@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.xuexiang.xaop' //引用xaop插件
+apply plugin: 'walle'
 
 android {
     compileSdkVersion build_versions.target_sdk
@@ -25,14 +26,12 @@ android {
         }
     }
 
-    if (isNeedPackage.toBoolean()) {
-        signingConfigs {
-            release {
-                storeFile file(app_release.storeFile)
-                storePassword app_release.storePassword
-                keyAlias app_release.keyAlias
-                keyPassword app_release.keyPassword
-            }
+    signingConfigs {
+        release {
+            storeFile file(app_release.storeFile)
+            storePassword app_release.storePassword
+            keyAlias app_release.keyAlias
+            keyPassword app_release.keyPassword
         }
     }
 
@@ -40,19 +39,7 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            if (isNeedPackage.toBoolean()) {
-                signingConfig signingConfigs.release
-            }
-        }
-    }
-
-    if (isNeedPackage.toBoolean()) {
-        applicationVariants.all { variant ->
-            variant.outputs.all {
-                if (variant.buildType.name.equals('release')) {
-                    outputFileName = "template_${defaultConfig.versionName}.apk"
-                }
-            }
+            signingConfig signingConfigs.release
         }
     }
 
@@ -65,6 +52,15 @@ android {
     lintOptions {
         abortOnError false
     }
+}
+
+walle {
+    // 指定渠道包的输出路径
+    apkOutputFolder = new File("${project.buildDir}/outputs/channels")
+    // 定制渠道包的APK的文件名称
+    apkFileNameFormat = '${appName}-${packageName}-${channel}-${buildType}-v${versionName}-${versionCode}-${buildTime}.apk'
+    // 渠道配置文件
+    channelFile = new File("${project.getProjectDir()}/channel")
 }
 
 dependencies {
@@ -81,6 +77,9 @@ dependencies {
     //bugly统计
     implementation 'com.tencent.bugly:crashreport:3.0.0' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     implementation 'com.tencent.bugly:nativecrashreport:3.7.1' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+
+    //美团多渠道打包
+    implementation 'com.meituan.android.walle:library:1.1.6'
 
     //工具类
     implementation 'com.github.xuexiangjys.XUtil:xutil-core:1.1.5'

@@ -1,7 +1,6 @@
 *.iml
 .gradle
 /LocalRepository
-/keystores
 /local.properties
 /.idea/caches
 /.idea/codeStyles

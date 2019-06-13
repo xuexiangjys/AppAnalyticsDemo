@@ -21,6 +21,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.meituan.android.walle.WalleChannelReader;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.BuglyStrategy;
 import com.umeng.analytics.MobclickAgent;
@@ -47,9 +48,13 @@ public class MyApp extends Application {
     private static final String APP_ID_UMENG = "5d01b5543fc195f587000182";
     private static final String APP_ID_BUGLY = "10b84c5e6f";
 
+    private static String CHANNEL_ID;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        CHANNEL_ID = WalleChannelReader.getChannel(this);
+        Log.e("xuexiang", "CHANNEL_ID:" + CHANNEL_ID);
 
         initLibs();
 
@@ -94,7 +99,7 @@ public class MyApp extends Application {
         UMConfigure.setLogEnabled(true);
         //初始化组件化基础库, 注意: 即使您已经在AndroidManifest.xml中配置过appkey和channel值，也需要在App代码中调用初始化接口（如需要使用AndroidManifest.xml中配置好的appkey和channel值，UMConfigure.init调用中appkey和channel参数请置为null）。
         //第二个参数是appkey，最后一个参数是pushSecret
-        UMConfigure.init(this, APP_ID_UMENG, "Umeng", UMConfigure.DEVICE_TYPE_PHONE,"");
+        UMConfigure.init(this, APP_ID_UMENG, CHANNEL_ID, UMConfigure.DEVICE_TYPE_PHONE,"");
         //统计SDK是否支持采集在子进程中打点的自定义事件，默认不支持
         UMConfigure.setProcessEvent(true);//支持多进程打点
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
@@ -108,8 +113,8 @@ public class MyApp extends Application {
         strategy.setEnableANRCrashMonitor(true)
                 .setEnableNativeCrashMonitor(true)
                 .setUploadProcess(true)
-//                .setAppChannel("bugly")
-//                .setDeviceID(DeviceUtils.getAndroidID())
+                .setAppChannel(CHANNEL_ID)
+                .setDeviceID(DeviceUtils.getAndroidID())
                 .setRecordUserInfoOnceADay(true);
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId,调试时将第三个参数设置为true
         Bugly.init(this, APP_ID_BUGLY, true, strategy);
