@@ -18,6 +18,7 @@
 package com.xuexiang.appanalyticsdemo.fragment;
 
 import com.tencent.bugly.crashreport.CrashReport;
+import com.umeng.analytics.MobclickAgent;
 import com.xuexiang.appanalyticsdemo.jni.NativeApi;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
@@ -75,4 +76,17 @@ public class BuglyFragment extends XPageSimpleListFragment {
                 break;
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getPageTitle());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getPageTitle());
+    }
+
 }

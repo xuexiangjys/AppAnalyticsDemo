@@ -20,6 +20,7 @@ package com.xuexiang.appanalyticsdemo.fragment;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.umeng.analytics.MobclickAgent;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageContainerListFragment;
 import com.xuexiang.xpage.utils.TitleBar;
@@ -61,6 +62,19 @@ public class MainFragment extends XPageContainerListFragment {
             ClickUtils.exitBy2Click();
         }
         return true;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getPageTitle());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getPageTitle());
     }
 
 }

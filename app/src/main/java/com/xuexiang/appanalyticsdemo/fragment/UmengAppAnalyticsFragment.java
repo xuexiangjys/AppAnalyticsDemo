@@ -102,13 +102,13 @@ public class UmengAppAnalyticsFragment extends XPageSimpleListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart(getPageName());
+        MobclickAgent.onPageStart(getPageTitle());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd(getPageName());
+        MobclickAgent.onPageEnd(getPageTitle());
     }
 
 
