@@ -44,6 +44,9 @@ import com.xuexiang.xutil.common.StringUtils;
 import com.xuexiang.xutil.system.DeviceUtils;
 import com.xuexiang.xutil.tip.ToastUtils;
 
+import org.android.agoo.huawei.HuaWeiRegister;
+import org.android.agoo.xiaomi.MiPushRegistar;
+
 import java.util.List;
 
 /**
@@ -177,6 +180,12 @@ public class MyApp extends Application {
             }
         };
         pushAgent.setNotificationClickHandler(notificationClickHandler);
+
+        //小米推送
+        MiPushRegistar.register(this, "2882303761518028967", "5661802845967");
+        //华为推送
+        HuaWeiRegister.register(this);
+
     }
 
     private void initBugly() {

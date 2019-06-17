@@ -21,6 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".push.MiPushTestActivity"
+            android:launchMode="singleTask"
+            android:exported="true" />
+
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="100867015" />
+
     </application>
 
 </manifest>
