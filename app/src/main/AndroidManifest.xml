@@ -22,11 +22,28 @@
             </intent-filter>
         </activity>
 
+        <!-- Bugly升级SDK配置开始  -->
+        <activity android:name=".activity.UpgradeActivity"
+            android:theme="@style/DialogStyle"/>
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:theme="@android:style/Theme.Translucent"/>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+        <!-- Bugly升级SDK配置结束-->
+
+        <!--第三方厂商推送-->
         <activity
             android:name=".push.MiPushTestActivity"
             android:launchMode="singleTask"
             android:exported="true" />
-
         <meta-data
             android:name="com.huawei.hms.client.appid"
             android:value="100867015" />

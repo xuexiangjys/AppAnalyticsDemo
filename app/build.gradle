@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.xuexiang.xaop' //引用xaop插件
-apply plugin: 'walle'
 
 android {
     compileSdkVersion build_versions.target_sdk
@@ -8,10 +7,10 @@ android {
 
     defaultConfig {
         applicationId "com.xuexiang.appanalyticsdemo"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion build_versions.target_sdk
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         externalNativeBuild {
@@ -24,6 +23,9 @@ android {
             //设置支持的SO库架构
             abiFilters 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
+
+        multiDexEnabled true
+        multiDexKeepProguard file("tinkerMultidexKeep.pro") //keep specific classes using proguard syntax
     }
 
     signingConfigs {
@@ -50,17 +52,10 @@ android {
     }
 
     lintOptions {
+        checkReleaseBuilds false
         abortOnError false
     }
-}
 
-walle {
-    // 指定渠道包的输出路径
-    apkOutputFolder = new File("${project.buildDir}/outputs/channels")
-    // 定制渠道包的APK的文件名称
-    apkFileNameFormat = '${appName}-${packageName}-${channel}-${buildType}-v${versionName}-${versionCode}-${buildTime}.apk'
-    // 渠道配置文件
-    channelFile = new File("${project.getProjectDir()}/channel")
 }
 
 dependencies {
@@ -86,10 +81,15 @@ dependencies {
     implementation 'com.umeng.umsdk:utdid:1.1.5.3'
     implementation 'com.umeng.umsdk:push:5.0.2'
 
-
-    //bugly统计
-    implementation 'com.tencent.bugly:crashreport:3.0.0' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    //bugly统计，设置了crashreport_upgrade就不需要crashreport
+//    implementation 'com.tencent.bugly:crashreport:3.0.0' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     implementation 'com.tencent.bugly:nativecrashreport:3.7.1' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+
+    //bugly版本更新
+    implementation "com.tencent.bugly:crashreport_upgrade:1.4.0"
+    // 指定tinker依赖版本（注：应用升级1.3.5版本起，不再内置tinker）
+    implementation 'com.tencent.tinker:tinker-android-lib:1.9.6'
+    implementation 'com.android.support:multidex:1.0.3'
 
     //美团多渠道打包
     implementation 'com.meituan.android.walle:library:1.1.6'
@@ -98,7 +98,6 @@ dependencies {
     implementation 'com.github.xuexiangjys.XUtil:xutil-core:1.1.5'
     //切片
     implementation 'com.github.xuexiangjys.XAOP:xaop-runtime:1.0.3'  //添加依赖
-
     //XPage
     implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.6'
     annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.6'
@@ -110,3 +109,7 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 }
+
+//walle多渠道打包
+apply from: 'multiple-channel.gradle'
+apply from: 'tinker-support.gradle'
