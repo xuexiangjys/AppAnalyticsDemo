@@ -19,6 +19,7 @@ package com.xuexiang.appanalyticsdemo.activity;
 
 import android.os.Bundle;
 
+import com.umeng.message.PushAgent;
 import com.xuexiang.appanalyticsdemo.fragment.MainFragment;
 import com.xuexiang.xpage.base.XPageActivity;
 
@@ -27,6 +28,9 @@ public class MainActivity extends XPageActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //在所有的Activity 的onCreate 方法或在应用的BaseActivity的onCreate方法中添加以下方法
+        PushAgent.getInstance(this).onAppStart();
+
         openPage(MainFragment.class);
     }
 }
