@@ -22,10 +22,10 @@ apply plugin: 'com.tencent.bugly.tinker-support'
  */
 def bakPath = file("${buildDir}/bakApk/")
 /** 每次在打补丁包的时候，需要更新这里的旧包的位置  **/
-def baseInfo = "app-1120-10-38-46"
+def baseInfo = "app-0617-15-53-38"
 def variantName = "release"
 
-def AppVersion = "1.0.2"
+def AppVersion = "1.0.0.1"
 
 /**
  * 对于插件各参数的详细解析请参考

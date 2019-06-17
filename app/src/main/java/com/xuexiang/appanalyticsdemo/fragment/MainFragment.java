@@ -49,7 +49,8 @@ public class MainFragment extends XPageContainerListFragment {
         return new Class[] {
                 //此处填写fragment
                 UmengAppAnalyticsFragment.class,
-                BuglyFragment.class
+                BuglyFragment.class,
+                BuglyUpdateFragment.class
         };
     }
 
@@ -82,13 +83,13 @@ public class MainFragment extends XPageContainerListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart(getPageTitle());
+        MobclickAgent.onPageStart(getPageName());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd(getPageTitle());
+        MobclickAgent.onPageEnd(getPageName());
     }
 
     /**

@@ -18,7 +18,6 @@
 package com.xuexiang.appanalyticsdemo.fragment;
 
 import com.umeng.analytics.MobclickAgent;
-import com.xuexiang.appanalyticsdemo.entity.PersonInfo;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xutil.system.DeviceUtils;
@@ -102,15 +101,14 @@ public class UmengAppAnalyticsFragment extends XPageSimpleListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart(getPageTitle());
+        MobclickAgent.onPageStart(getPageName());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd(getPageTitle());
+        MobclickAgent.onPageEnd(getPageName());
     }
-
 
 
 }
