@@ -26,6 +26,7 @@ import com.xuexiang.xaop.annotation.Permission;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xutil.app.ActivityUtils;
+import com.xuexiang.xutil.app.AppUtils;
 import com.xuexiang.xutil.app.IntentUtils;
 import com.xuexiang.xutil.app.PathUtils;
 
@@ -45,25 +46,31 @@ public class BuglyUpdateFragment extends XPageSimpleListFragment {
 
     @Override
     protected List<String> initSimpleData(List<String> lists) {
+        lists.add("当前版本:" + AppUtils.getAppVersionName());
         lists.add("版本更新（全量）");
         lists.add("手动热更新");
         return lists;
     }
 
-    @Permission(STORAGE)
     @Override
     protected void onItemClick(int position) {
         switch (position) {
-            case 0:
-                Beta.checkUpgrade();
-                break;
             case 1:
+                checkUpgrade();
+                break;
+            case 2:
                 choosePatchApk();
                 break;
             default:
                 break;
         }
     }
+
+    @Permission(STORAGE)
+    private void checkUpgrade() {
+        Beta.checkUpgrade();
+    }
+
 
     @Permission(STORAGE)
     private void choosePatchApk() {

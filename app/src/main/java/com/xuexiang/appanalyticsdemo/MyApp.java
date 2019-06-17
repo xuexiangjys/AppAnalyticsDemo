@@ -89,9 +89,9 @@ public class MyApp extends Application {
 
         initUMeng();
 
-        initBugly();
-
         initBuglyBetaUpdate();
+
+        initBugly();
     }
 
 
@@ -226,7 +226,7 @@ public class MyApp extends Application {
     }
 
     /**
-     * 初始化Bugly的热更新
+     * 初始化Bugly的热更新,一定要先BuglySDK前初始化，否则将不起作用！！
      */
     private void initBuglyBetaUpdate() {
         // 设置是否开启热更新能力，默认为true
@@ -242,7 +242,7 @@ public class MyApp extends Application {
         // 设置是否检查版本更新
         Beta.autoCheckUpgrade = true;
         //设置升级周期为60s（默认检查周期为0s），60s内SDK不重复向后台请求策略
-        Beta.upgradeCheckPeriod = 60 * 1000;
+//        Beta.upgradeCheckPeriod = 60 * 1000;
         //设置启动延时为1s（默认延时3s），APP启动1s后初始化SDK，避免影响APP启动速度;
         Beta.initDelay = 3 * 1000;
         //设置通知栏大图标，largeIconId为项目中的图片资源；
