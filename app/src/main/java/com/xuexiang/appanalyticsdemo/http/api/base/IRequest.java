@@ -15,17 +15,16 @@
  *
  */
 
-package com.xuexiang.appanalyticsdemo.http.api;
-
-import com.xuexiang.appanalyticsdemo.http.util.Convert;
+package com.xuexiang.appanalyticsdemo.http.api.base;
 
 /**
  * @author xuexiang
- * @since 2019-07-02 00:17
+ * @since 2019-07-02 00:16
  */
-public class BaseRequest implements IRequest {
-    @Override
-    public String toJson() {
-        return Convert.toJson(this);
-    }
+public interface IRequest {
+
+    /**
+     * @return 转为json
+     */
+    String toJson();
 }

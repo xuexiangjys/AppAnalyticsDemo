@@ -15,16 +15,25 @@
  *
  */
 
-package com.xuexiang.appanalyticsdemo.http.api;
+package com.xuexiang.appanalyticsdemo.http.api.base;
+
+import com.xuexiang.appanalyticsdemo.http.api.base.LzyResponse;
+
+import java.io.Serializable;
 
 /**
  * @author xuexiang
- * @since 2019-07-02 00:16
+ * @since 2019-07-02 00:45
  */
-public interface IRequest {
+public class SimpleResponse implements Serializable {
 
-    /**
-     * @return 转为json
-     */
-    String toJson();
+    public int code;
+    public String msg;
+
+    public LzyResponse toLzyResponse() {
+        LzyResponse lzyResponse = new LzyResponse();
+        lzyResponse.code = code;
+        lzyResponse.msg = msg;
+        return lzyResponse;
+    }
 }

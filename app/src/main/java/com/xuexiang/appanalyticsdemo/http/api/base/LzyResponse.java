@@ -15,7 +15,7 @@
  *
  */
 
-package com.xuexiang.appanalyticsdemo.http.api;
+package com.xuexiang.appanalyticsdemo.http.api.base;
 
 import java.io.Serializable;
 

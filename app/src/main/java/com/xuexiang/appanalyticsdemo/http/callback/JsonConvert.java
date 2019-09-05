@@ -19,8 +19,8 @@ package com.xuexiang.appanalyticsdemo.http.callback;
 
 import com.google.gson.stream.JsonReader;
 import com.lzy.okgo.convert.Converter;
-import com.xuexiang.appanalyticsdemo.http.api.LzyResponse;
-import com.xuexiang.appanalyticsdemo.http.api.SimpleResponse;
+import com.xuexiang.appanalyticsdemo.http.api.base.LzyResponse;
+import com.xuexiang.appanalyticsdemo.http.api.base.SimpleResponse;
 import com.xuexiang.appanalyticsdemo.http.util.Convert;
 
 import org.json.JSONArray;

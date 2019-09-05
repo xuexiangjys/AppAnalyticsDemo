@@ -15,23 +15,17 @@
  *
  */
 
-package com.xuexiang.appanalyticsdemo.http.api;
+package com.xuexiang.appanalyticsdemo.http.api.base;
 
-import java.io.Serializable;
+import com.xuexiang.appanalyticsdemo.http.util.Convert;
 
 /**
  * @author xuexiang
- * @since 2019-07-02 00:45
+ * @since 2019-07-02 00:17
  */
-public class SimpleResponse implements Serializable {
-
-    public int code;
-    public String msg;
-
-    public LzyResponse toLzyResponse() {
-        LzyResponse lzyResponse = new LzyResponse();
-        lzyResponse.code = code;
-        lzyResponse.msg = msg;
-        return lzyResponse;
+public class BaseRequest implements IRequest {
+    @Override
+    public String toJson() {
+        return Convert.toJson(this);
     }
 }

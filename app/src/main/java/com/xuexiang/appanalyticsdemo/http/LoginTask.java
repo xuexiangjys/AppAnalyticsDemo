@@ -22,15 +22,29 @@ import com.mob.MobSDK;
 import com.mob.secverify.datatype.LoginResult;
 import com.mob.secverify.datatype.VerifyResult;
 import com.mob.tools.utils.DeviceHelper;
-import com.xuexiang.appanalyticsdemo.http.callback.DialogJsonCallback;
+import com.xuexiang.appanalyticsdemo.http.api.MobResult;
+import com.xuexiang.appanalyticsdemo.http.callback.TipJsonCallback;
+import com.xuexiang.appanalyticsdemo.http.util.SignUtils;
+import com.xuexiang.xutil.data.DateUtils;
+import com.xuexiang.xutil.net.JsonUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 免密服务端登录
+ *
+ * @author xuexiang
+ * @since 2019-09-05 21:56
+ */
 public class LoginTask {
-	private static final String URL_LOGIN = "demo/sdkLogin";
 
 	private static LoginTask instance;
+
+	private static final String LOGIN_URL = "http://identify.verify.mob.com/auth/auth/sdkClientFreeLogin";
+	private static final String APP_KEY = "2c529a6f35c09";
+	public static final String APP_SECRET = "c496e66d18d9489e37e59906e5924484";
+
 
 	private LoginTask() {}
 
@@ -45,17 +59,22 @@ public class LoginTask {
 		return instance;
 	}
 
-	public void login(VerifyResult verifyResult, DialogJsonCallback<LoginResult> callback) {
-		Map<String, String> values = new HashMap<>();
+	public void login(VerifyResult verifyResult, TipJsonCallback<MobResult> callback) {
+		Map<String, Object> values = new HashMap<>();
 		if (verifyResult != null) {
+			values.put("appkey", APP_KEY);
 			values.put("opToken", verifyResult.getOpToken());
 			values.put("operator", verifyResult.getOperator());
 			values.put("phoneOperator", verifyResult.getOperator());
 			values.put("token", verifyResult.getToken());
+			values.put("timestamp", DateUtils.getNowMills());
 			values.put("md5", DeviceHelper.getInstance(MobSDK.getContext()).getSignMD5());
 		}
-		OkGo.<LoginResult>post(ServerConfig.getServerUrl() + URL_LOGIN)
-				.params(values)
+		values.put("sign", SignUtils.getSign(values, APP_SECRET));
+		OkGo.<MobResult>post(LOGIN_URL)
+				.upJson(JsonUtil.toJson(values))
 				.execute(callback);
 	}
+
+
 }
