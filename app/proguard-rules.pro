@@ -273,3 +273,13 @@
 
 -keep public class com.xuexiang.appanalyticsdemo.jni.**{*;}
 
+
+-ignorewarnings
+# for SecVerify
+-keep class com.mob.**{*;}
+# for CTCC
+-keep class cn.com.chinatelecom.account.api.**{*;}
+# for CUCC
+-keep class com.sdk.**{*;}
+# for CMCC
+-keep class com.cmic.sso.sdk.**{*;}

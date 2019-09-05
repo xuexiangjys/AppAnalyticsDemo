@@ -24,11 +24,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.v4.app.NotificationManagerCompat;
 import android.view.KeyEvent;
 import android.view.View;
 
 import com.umeng.analytics.MobclickAgent;
+import com.xuexiang.appanalyticsdemo.util.NotifyUtils;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageContainerListFragment;
 import com.xuexiang.xpage.utils.TitleBar;
@@ -50,7 +50,8 @@ public class MainFragment extends XPageContainerListFragment {
                 //此处填写fragment
                 UmengAppAnalyticsFragment.class,
                 BuglyFragment.class,
-                BuglyUpdateFragment.class
+                BuglyUpdateFragment.class,
+                SecVerifyFragment.class
         };
     }
 
@@ -96,16 +97,13 @@ public class MainFragment extends XPageContainerListFragment {
      * 功用：检查是否已经开启了通知权限
      */
     private void checkNotifySetting() {
-        NotificationManagerCompat manager = NotificationManagerCompat.from(getContext());
-        // areNotificationsEnabled方法的有效性官方只最低支持到API 19，低于19的仍可调用此方法不过只会返回true，即默认为用户已经开启了通知。
-        boolean isOpened = manager.areNotificationsEnabled();
-        if (!isOpened) {
+        if (!NotifyUtils.isNotifyPermissionOpen(getContext())) {
             new AlertDialog.Builder(getContext())
                     .setMessage("通知权限未打开，是否前去打开？")
                     .setPositiveButton("是", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            openAppNotificationSettings(getActivity());
+                            NotifyUtils.openNotifyPermissionSetting(getContext());
                         }
                     })
                     .setNegativeButton("否", null)

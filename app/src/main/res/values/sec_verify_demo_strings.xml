@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2019 xuexiangjys(xuexiangjys@163.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
+<resources>
+	<string name="sec_verify_demo_text_title_bar_back"><![CDATA[<]]></string>
+
+	<string name="sec_verify_demo_one_key_login">一键登录(无服务器版)</string>
+	<string name="sec_verify_demo_verify">一键验证</string>
+	<string name="sec_verify_demo_hint">开始验证！</string>
+	<string name="sec_verify_demo_login">登录</string>
+	<string name="sec_verify_demo_customize_agreement_name_1">服务条款一</string>
+	<string name="sec_verify_demo_customize_agreement_name_2">服务条款二</string>
+
+	<!-- 认证成功页 -->
+	<string name="sec_verify_demo_success_complete">验证成功</string>
+	<string name="sec_verify_demo_success_hint">跳转到登录后的首页</string>
+	<string name="sec_verify_demo_success_one_more_try">再次体验</string>
+</resources>

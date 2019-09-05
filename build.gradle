@@ -13,6 +13,8 @@ buildscript {
         classpath "com.tencent.bugly:tinker-support:1.1.2" //tinker热更新插件
         //美团多渠道打包
         classpath 'com.meituan.android.walle:plugin:1.1.6'
+
+        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
     }
 }
 

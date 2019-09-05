@@ -25,6 +25,7 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.lzy.okgo.OkGo;
 import com.meituan.android.walle.WalleChannelReader;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.BuglyStrategy;
@@ -41,6 +42,7 @@ import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 import com.xuexiang.appanalyticsdemo.activity.UpgradeActivity;
+import com.xuexiang.appanalyticsdemo.http.OkGoInit;
 import com.xuexiang.xaop.XAOP;
 import com.xuexiang.xaop.util.PermissionUtils;
 import com.xuexiang.xpage.AppPageConfig;
@@ -119,6 +121,8 @@ public class MyApp extends Application {
             }
 
         });
+
+        OkGoInit.init(this);
     }
 
     /**
@@ -155,7 +159,7 @@ public class MyApp extends Application {
             public void onSuccess(String deviceToken) {
                 //注册成功会返回deviceToken deviceToken是推送消息的唯一标志T
                 ToastUtils.toast("推送服务连接成功！");
-                Log.i("xuexiang", "注册成功：deviceToken：-------->  " + deviceToken);
+                Log.e("xuexiang", "注册成功：deviceToken：-------->  " + deviceToken);
             }
 
             @Override

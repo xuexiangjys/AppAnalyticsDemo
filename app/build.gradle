@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.xuexiang.xaop' //引用xaop插件
+// 添加插件
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion build_versions.target_sdk
@@ -79,7 +81,7 @@ dependencies {
     implementation 'com.umeng.umsdk:xiaomi-umengaccs:1.0.9'
 //    implementation 'com.umeng.umsdk:common:2.0.2'
     implementation 'com.umeng.umsdk:utdid:1.1.5.3'
-    implementation 'com.umeng.umsdk:push:5.0.2'
+    implementation 'com.umeng.umsdk:push:6.0.1'
 
     //bugly统计，设置了crashreport_upgrade就不需要crashreport
 //    implementation 'com.tencent.bugly:crashreport:3.0.0' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
@@ -95,7 +97,8 @@ dependencies {
     implementation 'com.meituan.android.walle:library:1.1.6'
 
     //工具类
-    implementation 'com.github.xuexiangjys.XUtil:xutil-core:1.1.5'
+    implementation 'com.github.xuexiangjys.XUtil:xutil-core:1.1.6'
+    implementation 'com.github.xuexiangjys.XUtil:xutil-sub:1.1.6'
     //切片
     implementation 'com.github.xuexiangjys.XAOP:xaop-runtime:1.0.3'  //添加依赖
     //XPage
@@ -108,8 +111,23 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+
+    //OKGO
+    implementation 'com.lzy.net:okgo:3.0.4'
+    implementation 'com.lzy.net:okrx2:2.0.2'
+    implementation 'com.lzy.net:okserver:2.0.5'
+    implementation deps.rx_android
+    implementation deps.gson
 }
 
 //walle多渠道打包
 apply from: 'multiple-channel.gradle'
 apply from: 'tinker-support.gradle'
+
+
+// 注册SecVerify的相关信息
+MobSDK {
+    appKey "2c529a6f35c09"
+    appSecret "c496e66d18d9489e37e59906e5924484"
+    SecVerify {}
+}
