@@ -19,9 +19,9 @@ package com.xuexiang.appanalyticsdemo.http;
 
 import com.lzy.okgo.OkGo;
 import com.mob.MobSDK;
-import com.mob.secverify.datatype.LoginResult;
 import com.mob.secverify.datatype.VerifyResult;
 import com.mob.tools.utils.DeviceHelper;
+import com.xuexiang.appanalyticsdemo.BuildConfig;
 import com.xuexiang.appanalyticsdemo.http.api.MobResult;
 import com.xuexiang.appanalyticsdemo.http.callback.TipJsonCallback;
 import com.xuexiang.appanalyticsdemo.http.util.SignUtils;
@@ -42,8 +42,6 @@ public class LoginTask {
 	private static LoginTask instance;
 
 	private static final String LOGIN_URL = "http://identify.verify.mob.com/auth/auth/sdkClientFreeLogin";
-	private static final String APP_KEY = "2c529a6f35c09";
-	public static final String APP_SECRET = "c496e66d18d9489e37e59906e5924484";
 
 
 	private LoginTask() {}
@@ -62,7 +60,7 @@ public class LoginTask {
 	public void login(VerifyResult verifyResult, TipJsonCallback<MobResult> callback) {
 		Map<String, Object> values = new HashMap<>();
 		if (verifyResult != null) {
-			values.put("appkey", APP_KEY);
+			values.put("appkey", BuildConfig.APP_KEY);
 			values.put("opToken", verifyResult.getOpToken());
 			values.put("operator", verifyResult.getOperator());
 			values.put("phoneOperator", verifyResult.getOperator());
@@ -70,7 +68,7 @@ public class LoginTask {
 			values.put("timestamp", DateUtils.getNowMills());
 			values.put("md5", DeviceHelper.getInstance(MobSDK.getContext()).getSignMD5());
 		}
-		values.put("sign", SignUtils.getSign(values, APP_SECRET));
+		values.put("sign", SignUtils.getSign(values, BuildConfig.APP_SECRET));
 		OkGo.<MobResult>post(LOGIN_URL)
 				.upJson(JsonUtil.toJson(values))
 				.execute(callback);

@@ -28,6 +28,22 @@ android {
 
         multiDexEnabled true
         multiDexKeepProguard file("tinkerMultidexKeep.pro") //keep specific classes using proguard syntax
+
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def appKey = properties.getProperty("APP_KEY")
+        if (appKey != null) {
+            buildConfigField "String", "APP_KEY", appKey
+        } else {
+            buildConfigField "String", "APP_KEY", '""'
+        }
+        def appSecret = properties.getProperty("APP_SECRET")
+        if (appSecret != null) {
+            buildConfigField "String", "APP_SECRET", appSecret
+        } else {
+            buildConfigField "String", "APP_SECRET", '""'
+        }
     }
 
     signingConfigs {

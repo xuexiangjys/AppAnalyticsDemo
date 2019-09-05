@@ -20,11 +20,11 @@ package com.xuexiang.appanalyticsdemo.http.api;
 import android.util.Base64;
 
 import com.mob.secverify.datatype.LoginResult;
+import com.xuexiang.appanalyticsdemo.BuildConfig;
 import com.xuexiang.appanalyticsdemo.http.util.Convert;
 import com.xuexiang.appanalyticsdemo.http.util.DES;
 
 import static android.util.Base64.DEFAULT;
-import static com.xuexiang.appanalyticsdemo.http.LoginTask.APP_SECRET;
 
 /**
  * @author xuexiang
@@ -70,7 +70,7 @@ public class MobResult {
 
     public LoginResult getLoginResult() {
         try {
-            byte[] decode = DES.decode(Base64.decode(res, DEFAULT), APP_SECRET.getBytes());
+            byte[] decode = DES.decode(Base64.decode(res, DEFAULT), BuildConfig.APP_SECRET.getBytes());
             return Convert.fromJson(new String(decode), LoginResult.class);
         } catch (Exception e) {
             e.printStackTrace();
