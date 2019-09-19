@@ -53,6 +53,12 @@ android {
             keyAlias app_release.keyAlias
             keyPassword app_release.keyPassword
         }
+        debug {
+            storeFile file("./debug.jks")
+            storePassword "123456"
+            keyAlias "debug"
+            keyPassword "123456"
+        }
     }
 
     buildTypes {
@@ -64,7 +70,7 @@ android {
 
         debug {
             minifyEnabled false
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
     }
 
